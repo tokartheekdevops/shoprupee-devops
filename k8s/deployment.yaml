@@ -28,6 +28,15 @@ spec:
       imagePullSecrets:
         - name: ecr-registry-secret
 
+        nodeSelector:
+  dedicated: nginx
+
+tolerations:
+  - key: dedicated
+    operator: Equal
+    value: nginx
+    effect: NoSchedule
+
       containers:
 
         - name: shoprupee
