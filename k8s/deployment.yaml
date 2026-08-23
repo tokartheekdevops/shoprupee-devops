@@ -10,6 +10,7 @@ spec:
 
   strategy:
     type: RollingUpdate
+
     rollingUpdate:
       maxUnavailable: 0
       maxSurge: 1
@@ -19,23 +20,27 @@ spec:
       app: shoprupee
 
   template:
+
     metadata:
       labels:
         app: shoprupee
 
     spec:
 
+      # Private ECR authentication
       imagePullSecrets:
         - name: ecr-registry-secret
 
-        nodeSelector:
-  dedicated: nginx
+      # Select worker1
+      nodeSelector:
+        dedicated: nginx
 
-tolerations:
-  - key: dedicated
-    operator: Equal
-    value: nginx
-    effect: NoSchedule
+      # Allow this pod to run on the tainted worker1
+      tolerations:
+        - key: dedicated
+          operator: Equal
+          value: nginx
+          effect: NoSchedule
 
       containers:
 
@@ -53,6 +58,7 @@ tolerations:
             httpGet:
               path: /nginx-health
               port: 80
+
             initialDelaySeconds: 5
             periodSeconds: 5
             timeoutSeconds: 2
@@ -62,12 +68,14 @@ tolerations:
             httpGet:
               path: /nginx-health
               port: 80
+
             initialDelaySeconds: 15
             periodSeconds: 10
             timeoutSeconds: 2
             failureThreshold: 3
 
           resources:
+
             requests:
               cpu: 50m
               memory: 64Mi
@@ -75,4 +83,3 @@ tolerations:
             limits:
               cpu: 250m
               memory: 128Mi
-
