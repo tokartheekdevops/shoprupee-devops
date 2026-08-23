@@ -31,6 +31,18 @@ spec:
       imagePullSecrets:
         {{- toYaml .Values.imagePullSecrets | nindent 8 }}
 
+      # Schedule ShopRupee on the Nginx-dedicated node
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      # Allow ShopRupee to tolerate the Nginx node taint
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
       containers:
 
         - name: shoprupee
