@@ -27,15 +27,15 @@ spec:
 
     spec:
 
-      # Private ECR authentication
+      # Private Amazon ECR authentication
       imagePullSecrets:
         - name: ecr-registry-secret
 
-      # Select worker1
+      # Select the node labeled dedicated=nginx
       nodeSelector:
         dedicated: nginx
 
-      # Allow this pod to run on the tainted worker1
+      # Allow the Pod to run on the tainted node
       tolerations:
         - key: dedicated
           operator: Equal
@@ -51,9 +51,11 @@ spec:
           imagePullPolicy: Always
 
           ports:
-            - containerPort: 80
+            - name: http
+              containerPort: 80
               protocol: TCP
 
+          # Readiness Probe
           readinessProbe:
             httpGet:
               path: /nginx-health
@@ -64,6 +66,7 @@ spec:
             timeoutSeconds: 2
             failureThreshold: 3
 
+          # Liveness Probe
           livenessProbe:
             httpGet:
               path: /nginx-health
@@ -74,6 +77,7 @@ spec:
             timeoutSeconds: 2
             failureThreshold: 3
 
+          # Resource Management
           resources:
 
             requests:
