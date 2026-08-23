@@ -42,3 +42,12 @@ livenessProbe:
   periodSeconds: 10
   timeoutSeconds: 2
   failureThreshold: 3
+
+  nodeSelector:
+  dedicated: nginx
+
+tolerations:
+  - key: dedicated
+    operator: Equal
+    value: nginx
+    effect: NoSchedule
