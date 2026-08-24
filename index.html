@@ -1,2633 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ShopRupee.com | DevOps CI/CD with Helm</title>
-
-<style>
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f7fb;
-    color: #111827;
-    overflow-x: hidden;
-}
-
-/* =========================
-   HEADER.
-========================= */
-
-header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-
-    background: rgba(17,24,39,.96);
-    color: white;
-
-    padding: 18px 7%;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    box-shadow: 0 5px 20px rgba(0,0,0,.2);
-}
-
-.logo {
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.logo span {
-    color: #60a5fa;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    margin-left: 25px;
-    transition: .3s;
-}
-
-nav a:hover {
-    color: #60a5fa;
-}
-
-/* =========================
-   TOP CI/CD PIPELINE.
-========================= */
-
-.top-pipeline {
-    background: #0f172a;
-    color: white;
-    padding: 25px 6%;
-    overflow: hidden;
-}
-
-.pipeline-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.pipeline-heading h2 {
-    font-size: 22px;
-}
-
-.pipeline-status {
-    background: rgba(34,197,94,.15);
-    border: 1px solid #22c55e;
-    color: #86efac;
-    padding: 8px 14px;
-    border-radius: 30px;
-    font-size: 12px;
-}
-
-.top-pipeline-track {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.top-stage {
-    width: 125px;
-    min-height: 90px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    background: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 14px;
-
-    transition: .3s;
-}
-
-.top-stage:hover {
-    transform: translateY(-7px);
-    border-color: #60a5fa;
-    box-shadow: 0 10px 30px rgba(37,99,235,.25);
-}
-
-.top-stage-icon {
-    font-size: 30px;
-    margin-bottom: 6px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.top-stage strong {
-    font-size: 13px;
-}
-
-.top-stage small {
-    color: #94a3b8;
-    margin-top: 4px;
-}
-
-.top-arrow {
-    color: #60a5fa;
-    font-size: 25px;
-
-    animation: arrowMove 1.5s infinite;
-}
-
-@keyframes arrowMove {
-
-    0%,100% {
-        transform: translateX(0);
-        opacity: .5;
-    }
-
-    50% {
-        transform: translateX(7px);
-        opacity: 1;
-    }
-
-}
-
-/* =========================
-   HELM GRAPHICS
-========================= */
-
-.helm-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-
-    padding: 7px 12px;
-
-    border-radius: 999px;
-
-    background: rgba(255,255,255,.12);
-
-    border: 1px solid rgba(255,255,255,.25);
-
-    color: white;
-
-    font-weight: 700;
-
-    font-size: 12px;
-}
-
-.helm-logo-svg {
-    width: 28px;
-    height: 28px;
-
-    flex: 0 0 auto;
-}
-
-.helm-card {
-    position: relative;
-    overflow: hidden;
-}
-
-.helm-card::after {
-    content: "HELM";
-
-    position: absolute;
-
-    right: 14px;
-    top: 12px;
-
-    padding: 5px 8px;
-
-    border-radius: 8px;
-
-    background: #0f172a;
-
-    color: white;
-
-    font-size: 9px;
-
-    font-weight: 800;
-
-    letter-spacing: 1px;
-}
-
-.helm-card .helm-logo-large {
-    width: 72px;
-    height: 72px;
-
-    color: #2563eb;
-
-    margin-bottom: 12px;
-}
-
-.helm-flow-item {
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 7px;
-}
-
-.helm-flow-item .helm-logo-small {
-    width: 22px;
-    height: 22px;
-}
-
-.helm-release {
-    margin-top: 22px;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap: 14px;
-}
-
-.helm-release-card {
-    background: rgba(255,255,255,.08);
-
-    border: 1px solid #334155;
-
-    border-radius: 14px;
-
-    padding: 18px;
-
-    text-align: center;
-}
-
-.helm-release-card .helm-logo-large {
-    width: 46px;
-    height: 46px;
-
-    color: #60a5fa;
-
-    margin-bottom: 8px;
-}
-
-.helm-release-card strong {
-    display: block;
-
-    margin-bottom: 5px;
-}
-
-.helm-release-card small {
-    color: #94a3b8;
-}
-
-/* =========================
-   HERO
-========================= */
-
-.hero {
-    min-height: 520px;
-
-    position: relative;
-
-    overflow: hidden;
-
-    padding: 90px 8%;
-
-    display: flex;
-
-    align-items: center;
-
-    color: white;
-
-    background:
-        radial-gradient(
-            circle at 20% 20%,
-            rgba(96,165,250,.4),
-            transparent 25%
-        ),
-
-        radial-gradient(
-            circle at 80% 30%,
-            rgba(167,139,250,.4),
-            transparent 25%
-        ),
-
-        linear-gradient(
-            135deg,
-            #1d4ed8,
-            #6d28d9
-        );
-}
-
-.hero-content {
-    position: relative;
-
-    z-index: 5;
-
-    max-width: 720px;
-}
-
-.hero h1 {
-    font-size: 52px;
-
-    margin-bottom: 15px;
-}
-
-.hero h2 {
-    color: #dbeafe;
-
-    margin-bottom: 20px;
-}
-
-.hero p {
-    font-size: 18px;
-
-    line-height: 1.7;
-
-    margin-bottom: 25px;
-}
-
-.button {
-    display: inline-block;
-
-    padding: 13px 25px;
-
-    background: white;
-
-    color: #2563eb;
-
-    border-radius: 10px;
-
-    text-decoration: none;
-
-    font-weight: bold;
-
-    transition: .3s;
-}
-
-.button:hover {
-    transform: translateY(-4px);
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.25);
-}
-
-/* =========================
-   HERO HELM GRAPHIC
-========================= */
-
-.hero-graphic {
-    position: absolute;
-
-    right: 8%;
-
-    top: 50%;
-
-    width: 320px;
-
-    height: 320px;
-
-    transform: translateY(-50%);
-}
-
-.orbit {
-    position: absolute;
-
-    inset: 20px;
-
-    border:
-        2px solid
-        rgba(255,255,255,.3);
-
-    border-radius: 50%;
-
-    animation:
-        rotate 15s linear infinite;
-}
-
-.orbit:nth-child(2) {
-    inset: 70px;
-
-    animation-duration: 9s;
-
-    animation-direction: reverse;
-}
-
-.orbit-dot {
-    position: absolute;
-
-    width: 14px;
-
-    height: 14px;
-
-    background: white;
-
-    border-radius: 50%;
-
-    box-shadow:
-        0 0 20px white;
-}
-
-.dot1 {
-    top: -7px;
-
-    left: 50%;
-}
-
-.dot2 {
-    right: -7px;
-
-    top: 50%;
-}
-
-.dot3 {
-    bottom: -7px;
-
-    left: 50%;
-}
-
-.cloud-icon {
-    position: absolute;
-
-    top: 50%;
-
-    left: 50%;
-
-    transform:
-        translate(-50%,-50%);
-
-    width: 125px;
-
-    height: 125px;
-
-    border-radius: 25px;
-
-    background:
-        rgba(255,255,255,.12);
-
-    border:
-        1px solid
-        rgba(255,255,255,.3);
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    font-size: 55px;
-
-    backdrop-filter:
-        blur(10px);
-
-    text-align: center;
-}
-
-.cloud-icon .helm-logo-svg {
-    width: 55px;
-
-    height: 55px;
-}
-
-@keyframes rotate {
-
-    to {
-        transform: rotate(360deg);
-    }
-
-}
-
-/* =========================
-   DEVOPS SECTION.
-========================= */
-
-.devops {
-    background: white;
-
-    padding: 70px 7%;
-}
-
-.section-title {
-    text-align: center;
-
-    font-size: 36px;
-
-    margin-bottom: 12px;
-}
-
-.section-description {
-    text-align: center;
-
-    color: #64748b;
-
-    margin-bottom: 40px;
-}
-
-/* =========================
-   PIPELINE
-========================= */
-
-.pipeline {
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    gap: 12px;
-
-    flex-wrap: wrap;
-}
-
-.pipeline-node {
-    width: 135px;
-
-    min-height: 145px;
-
-    background: #f8fafc;
-
-    border:
-        2px solid
-        #2563eb;
-
-    border-radius: 16px;
-
-    padding: 20px 10px;
-
-    text-align: center;
-
-    transition: .3s;
-}
-
-.pipeline-node:hover {
-    transform:
-        translateY(-10px)
-        scale(1.04);
-
-    box-shadow:
-        0 15px 30px
-        rgba(37,99,235,.2);
-}
-
-.node-icon {
-    font-size: 40px;
-
-    margin-bottom: 10px;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-}
-
-.node-icon .helm-logo-svg {
-    width: 40px;
-
-    height: 40px;
-}
-
-.pipeline-node h3 {
-    font-size: 16px;
-
-    margin-bottom: 7px;
-}
-
-.pipeline-node p {
-    color: #64748b;
-
-    font-size: 12px;
-}
-
-.pipeline-arrow {
-    color: #2563eb;
-
-    font-size: 28px;
-
-    animation:
-        arrowMove 1.5s infinite;
-}
-
-/* =========================
-   DEVOPS METRICS
-========================= */
-
-.metrics {
-    max-width: 950px;
-
-    margin: 40px auto 0;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap: 15px;
-}
-
-.metric {
-    background: #f8fafc;
-
-    border:
-        1px solid
-        #e2e8f0;
-
-    border-radius: 14px;
-
-    padding: 20px;
-
-    text-align: center;
-
-    transition: .3s;
-}
-
-.metric:hover {
-    transform:
-        translateY(-5px);
-
-    box-shadow:
-        0 10px 25px
-        rgba(0,0,0,.08);
-}
-
-.metric-value {
-    display: block;
-
-    font-size: 26px;
-
-    font-weight: bold;
-
-    color: #2563eb;
-}
-
-.metric-label {
-    color: #64748b;
-
-    font-size: 12px;
-
-    margin-top: 5px;
-
-    display: block;
-}
-
-/* =========================
-   FLOW GRAPHIC
-========================= */
-
-.flow-box {
-    max-width: 1100px;
-
-    margin: 40px auto;
-
-    background: #111827;
-
-    border-radius: 18px;
-
-    padding: 25px;
-
-    color: white;
-
-    overflow-x: auto;
-}
-
-.flow {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 10px;
-
-    min-width: 950px;
-}
-
-.flow-item {
-    background: #1e293b;
-
-    border:
-        1px solid
-        #475569;
-
-    padding: 12px 15px;
-
-    border-radius: 10px;
-
-    font-size: 12px;
-}
-
-.flow-arrow {
-    color: #60a5fa;
-
-    font-size: 20px;
-}
-
-.helm-flow-item {
-    border-color: #60a5fa;
-
-    background:
-        rgba(37,99,235,.18);
-}
-
-/* =========================
-   KUBERNETES
-========================= */
-
-.cluster {
-    margin-top: 60px;
-
-    padding: 40px;
-
-    border-radius: 20px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #eff6ff,
-            #f5f3ff
-        );
-
-    border:
-        2px solid
-        #bfdbfe;
-}
-
-.cluster-title {
-    text-align: center;
-
-    font-size: 28px;
-
-    margin-bottom: 10px;
-}
-
-.cluster-subtitle {
-    text-align: center;
-
-    color: #64748b;
-
-    margin-bottom: 35px;
-}
-
-.cluster-container {
-    border:
-        3px dashed
-        #2563eb;
-
-    border-radius: 20px;
-
-    padding: 30px;
-}
-
-/* =========================
-   HELM RELEASE GRAPHICS
-========================= */
-
-.helm-release {
-    margin-bottom: 30px;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap: 14px;
-}
-
-.helm-release-card {
-    background: #111827;
-
-    color: white;
-
-    border:
-        1px solid
-        #334155;
-
-    border-radius: 14px;
-
-    padding: 20px;
-
-    text-align: center;
-
-    transition: .3s;
-}
-
-.helm-release-card:hover {
-    transform:
-        translateY(-6px);
-
-    box-shadow:
-        0 12px 25px
-        rgba(37,99,235,.2);
-}
-
-.helm-release-card .helm-logo-large {
-    width: 50px;
-
-    height: 50px;
-
-    color: #60a5fa;
-
-    margin-bottom: 10px;
-}
-
-.helm-release-card strong {
-    display: block;
-
-    margin-bottom: 6px;
-}
-
-.helm-release-card small {
-    color: #94a3b8;
-}
-
-/* =========================
-   PODS
-========================= */
-
-.pods {
-    display: grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap: 20px;
-}
-
-.pod {
-    background: white;
-
-    border-radius: 15px;
-
-    padding: 25px 15px;
-
-    text-align: center;
-
-    border:
-        2px solid
-        #22c55e;
-
-    box-shadow:
-        0 8px 20px
-        rgba(0,0,0,.08);
-
-    transition: .3s;
-}
-
-.pod:hover {
-    transform:
-        translateY(-8px);
-}
-
-.pod-icon {
-    font-size: 40px;
-
-    margin-bottom: 10px;
-}
-
-.pod-status {
-    display: inline-block;
-
-    margin-top: 10px;
-
-    padding: 5px 12px;
-
-    border-radius: 20px;
-
-    background: #dcfce7;
-
-    color: #166534;
-
-    font-size: 12px;
-
-    font-weight: bold;
-}
-
-/* =========================
-   ROLLING UPDATE
-========================= */
-
-.rolling {
-    margin-top: 40px;
-
-    background: #111827;
-
-    color: white;
-
-    padding: 30px;
-
-    border-radius: 16px;
-
-    text-align: center;
-}
-
-.rolling h3 {
-    font-size: 24px;
-
-    margin-bottom: 10px;
-}
-
-.rolling p {
-    color: #cbd5e1;
-
-    margin-bottom: 25px;
-}
-
-.update-animation {
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    gap: 20px;
-}
-
-.old-pod,
-.new-pod {
-    padding: 15px 25px;
-
-    border-radius: 10px;
-
-    font-weight: bold;
-}
-
-.old-pod {
-    background: #374151;
-
-    animation:
-        oldVersion 4s infinite;
-}
-
-.new-pod {
-    background: #2563eb;
-
-    animation:
-        newVersion 4s infinite;
-}
-
-@keyframes oldVersion {
-
-    0%,60% {
-        opacity: 1;
-
-        transform:
-            scale(1);
-    }
-
-    75%,100% {
-        opacity: .3;
-
-        transform:
-            scale(.8);
-    }
-
-}
-
-@keyframes newVersion {
-
-    0%,30% {
-        opacity: .3;
-
-        transform:
-            scale(.8);
-    }
-
-    50%,100% {
-        opacity: 1;
-
-        transform:
-            scale(1);
-    }
-
-}
-
-
-/* =========================
-   TOOLS + CONCEPT GRAPHICS
-========================= */
-
-.tools-map {
-    padding: 70px 7%;
-    background: #f8fafc;
-}
-
-.tool-lane {
-    max-width: 1200px;
-    margin: 35px auto 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.tool-card {
-    width: 135px;
-    min-height: 135px;
-    padding: 18px 10px;
-    background: white;
-    border: 2px solid #cbd5e1;
-    border-radius: 16px;
-    text-align: center;
-    box-shadow: 0 7px 20px rgba(15,23,42,.08);
-    transition: .3s;
-}
-
-.tool-card:hover {
-    transform: translateY(-7px);
-    border-color: #2563eb;
-}
-
-.featured-tool {
-    border-color: #2563eb;
-    background: #eff6ff;
-}
-
-.tool-logo {
-    width: 58px;
-    height: 58px;
-    margin: 0 auto 10px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    font-size: 17px;
-    color: white;
-    background: #334155;
-}
-
-.github-logo { background: #111827; }
-.jenkins-logo { background: #d97706; font-size: 32px; }
-.docker-logo { background: #2563eb; font-size: 28px; }
-.ecr-logo { background: #f59e0b; }
-.helm-logo-text { background: #2563eb; font-size: 34px; }
-.k8s-logo { background: #326ce5; font-size: 32px; }
-
-.tool-card strong {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.tool-card small {
-    color: #64748b;
-    font-size: 11px;
-}
-
-.tool-arrow {
-    color: #2563eb;
-    font-size: 25px;
-    font-weight: bold;
-}
-
-.concept-grid {
-    max-width: 1100px;
-    margin: 0 auto 35px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.concept-card {
-    background: white;
-    border-radius: 18px;
-    padding: 25px;
-    border: 2px solid #cbd5e1;
-    box-shadow: 0 8px 25px rgba(15,23,42,.08);
-    min-height: 245px;
-}
-
-.rolling-card { border-color: #2563eb; }
-.taint-card { border-color: #f59e0b; }
-.toleration-card { border-color: #22c55e; }
-
-.concept-icon {
-    font-size: 42px;
-    margin-bottom: 10px;
-}
-
-.concept-card h3 {
-    font-size: 21px;
-    margin-bottom: 8px;
-}
-
-.concept-card p {
-    color: #64748b;
-    line-height: 1.6;
-    font-size: 13px;
-}
-
-.concept-flow {
-    margin-top: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.concept-flow span {
-    padding: 9px 12px;
-    border-radius: 10px;
-    background: #eef2ff;
-    color: #1e3a8a;
-    font-size: 11px;
-    font-weight: bold;
-}
-
-.concept-flow b {
-    font-size: 20px;
-    color: #475569;
-}
-
-.trainer-summary {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 28px;
-    border-radius: 18px;
-    background: #111827;
-    color: white;
-}
-
-.trainer-summary h3 {
-    text-align: center;
-    margin-bottom: 22px;
-    font-size: 22px;
-}
-
-.summary-columns {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-}
-
-.summary-columns > div {
-    padding: 18px;
-    background: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 13px;
-}
-
-.summary-columns strong {
-    display: block;
-    color: #93c5fd;
-    margin-bottom: 8px;
-}
-
-.summary-columns p {
-    color: #cbd5e1;
-    line-height: 1.6;
-    font-size: 12px;
-}
-
-@media(max-width:900px) {
-    .concept-grid,
-    .summary-columns {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media(max-width:768px) {
-    .tool-lane {
-        flex-direction: column;
-    }
-
-    .tool-arrow {
-        transform: rotate(90deg);
-    }
-
-    .tool-card {
-        width: min(100%, 260px);
-    }
-}
-
-/* =========================
-   PRODUCTS
-========================= */
-
-.products {
-    padding: 70px 7%;
-}
-
-.product-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit,minmax(220px,1fr));
-
-    gap: 25px;
-}
-
-.card {
-    background: white;
-
-    padding: 25px;
-
-    border-radius: 16px;
-
-    text-align: center;
-
-    box-shadow:
-        0 5px 20px
-        rgba(0,0,0,.07);
-
-    transition: .3s;
-}
-
-.card:hover {
-    transform:
-        translateY(-10px);
-
-    box-shadow:
-        0 20px 40px
-        rgba(0,0,0,.12);
-}
-
-.product-image {
-    height: 150px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #e0e7ff,
-            #ede9fe
-        );
-
-    border-radius: 12px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 60px;
-
-    margin-bottom: 20px;
-}
-
-.price {
-    font-size: 22px;
-
-    font-weight: bold;
-
-    color: #2563eb;
-
-    margin: 15px 0;
-}
-
-.buy {
-    display: inline-block;
-
-    background: #2563eb;
-
-    color: white;
-
-    padding: 10px 20px;
-
-    border-radius: 8px;
-
-    text-decoration: none;
-}
-
-.buy:hover {
-    background: #1d4ed8;
-}
-
-/* =========================
-   ARCHITECTURE
-========================= */
-
-.architecture {
-    margin:
-        20px 7% 60px;
-
-    padding: 40px;
-
-    background: white;
-
-    border-radius: 18px;
-
-    text-align: center;
-
-    box-shadow:
-        0 5px 20px
-        rgba(0,0,0,.07);
-}
-
-.architecture-flow {
-    font-size: 18px;
-
-    font-weight: bold;
-
-    color: #2563eb;
-
-    line-height: 2;
-
-    margin: 20px 0;
-}
-
-.badge {
-    display: inline-block;
-
-    padding: 12px 20px;
-
-    background: #dcfce7;
-
-    color: #166534;
-
-    border-radius: 25px;
-
-    font-weight: bold;
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer {
-    background: #111827;
-
-    color: white;
-
-    padding: 35px;
-
-    text-align: center;
-}
-
-footer p {
-    margin: 8px;
-}
-
-.footer-tech {
-    color: #60a5fa;
-
-    font-weight: bold;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:900px) {
-
-    .hero-graphic {
-        opacity: .2;
-
-        right: 0;
-    }
-
-    .metrics {
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-    .top-pipeline-track {
-        gap: 8px;
-    }
-
-}
-
-@media(max-width:768px) {
-
-    header {
-        flex-direction: column;
-
-        gap: 15px;
-    }
-
-    nav a {
-        margin: 0 7px;
-
-        font-size: 13px;
-    }
-
-    .hero {
-        padding:
-            70px 7%;
-    }
-
-    .hero h1 {
-        font-size: 36px;
-    }
-
-    .pipeline {
-        flex-direction: column;
-    }
-
-    .pipeline-arrow {
-        transform:
-            rotate(90deg);
-    }
-
-    .pods {
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-    .helm-release {
-        grid-template-columns:
-            1fr;
-    }
-
-    .top-pipeline-track {
-        display: grid;
-
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-    .top-arrow {
-        display: none;
-    }
-
-    .pipeline-heading {
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 12px;
-    }
-
-}
-
-@media(max-width:450px) {
-
-    .pods,
-    .metrics {
-        grid-template-columns: 1fr;
-    }
-
-    .top-pipeline-track {
-        grid-template-columns: 1fr;
-    }
-
-    .hero h1 {
-        font-size: 30px;
-    }
-
-    .hero-graphic {
-        display: none;
-    }
-
-}
-
-/* =========================
-   HELM SVG
-========================= */
-
-</style>
-
-</head>
-
-<body>
-
-<!-- =========================
-     HEADER
-========================= -->
-
-<header>
-
-    <div class="logo">
-        Shop<span>Rupee</span>
-    </div>
-
-    <nav>
-
-        <a href="#">
-            Home
-        </a>
-
-        <a href="#products">
-            Products
-        </a>
-
-        <a href="#devops">
-            DevOps
-        </a>
-
-        <a href="#cluster">
-            Kubernetes
-        </a>
-
-        <a href="#tools-map">
-            Tools & Concepts
-        </a>
-
-    </nav>
-
-</header>
-
-
-<!-- =========================
-     TOP CI/CD PIPELINE
-========================= -->
-
-<section class="top-pipeline">
-
-    <div class="pipeline-heading">
-
-        <h2>
-            ⚡ CI/CD DevOps Pipeline
-        </h2>
-
-        <div style="
-            display:flex;
-            align-items:center;
-            gap:10px;
-            flex-wrap:wrap;
-        ">
-
-            <div class="helm-badge">
-
-                <svg
-                    class="helm-logo-svg"
-                    viewBox="0 0 64 64"
-                    aria-label="Helm"
-                    role="img"
-                >
-
-                    <circle
-                        cx="32"
-                        cy="32"
-                        r="29"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="3"
-                    />
-
-                    <path
-                        d="M18 44V20h5v19h18v5H18z"
-                        fill="currentColor"
-                    />
-
-                    <path
-                        d="M26 20h5v12h10V20h5v24h-5v-7H31v7h-5V20z"
-                        fill="currentColor"
-                        opacity=".72"
-                    />
-
-                </svg>
-
-                Helm • Chart Deployment
-
-            </div>
-
-
-            <div class="pipeline-status">
-
-                ● PIPELINE HEALTHY • AUTO DEPLOY ON
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="top-pipeline-track">
-
-
-        <!-- CODE -->
-
-        <div class="top-stage">
-
-            <div class="top-stage-icon">
-                💻
-            </div>
-
-            <strong>
-                Code
-            </strong>
-
-            <small>
-                Developer
-            </small>
-
-        </div>
-
-
-        <div class="top-arrow">
-            →
-        </div>
-
-
-        <!-- GITHUB -->
-
-        <div class="top-stage">
-
-            <div class="top-stage-icon">
-                🐙
-            </div>
-
-            <strong>
-                GitHub
-            </strong>
-
-            <small>
-                Push / PR
-            </small>
-
-        </div>
-
-
-        <div class="top-arrow">
-            →
-        </div>
-
-
-        <!-- JENKINS -->
-
-        <div class="top-stage">
-
-            <div class="top-stage-icon">
-                🔨
-            </div>
-
-            <strong>
-                Jenkins
-            </strong>
-
-            <small>
-                Build & Test
-            </small>
-
-        </div>
-
-
-        <div class="top-arrow">
-            →
-        </div>
-
-
-        <!-- DOCKER -->
-
-        <div class="top-stage">
-
-            <div class="top-stage-icon">
-                🐳
-            </div>
-
-            <strong>
-                Docker
-            </strong>
-
-            <small>
-                Image Build
-            </small>
-
-        </div>
-
-
-        <div class="top-arrow">
-            →
-        </div>
-
-
-        <!-- ECR -->
-
-        <div class="top-stage">
-
-            <div class="top-stage-icon">
-                📦
-            </div>
-
-            <strong>
-                Amazon ECR
-            </strong>
-
-            <small>
-                Image Registry
-            </small>
-
-        </div>
-
-
-        <div class="top-arrow">
-            →
-        </div>
-
-
-        <!-- HELM -->
-
-        <div class="top-stage helm-card">
-
-            <div class="top-stage-icon">
-
-                <svg
-                    class="helm-logo-svg"
-                    viewBox="0 0 64 64"
-                    aria-label="Helm"
-                    role="img"
-                >
-
-                    <circle
-                        cx="32"
-                        cy="32"
-                        r="29"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="3"
-                    />
-
-                    <path
-                        d="M18 44V20h5v19h18v5H18z"
-                        fill="currentColor"
-                    />
-
-                    <path
-                        d="M26 20h5v12h10V20h5v24h-5v-7H31v7h-5V20z"
-                        fill="currentColor"
-                        opacity=".72"
-                    />
-
-                </svg>
-
-            </div>
-
-            <strong>
-                Helm
-            </strong>
-
-            <small>
-                Package & Release
-            </small>
-
-        </div>
-
-
-        <div class="top-arrow">
-            →
-        </div>
-
-
-        <!-- KUBERNETES -->
-
-        <div class="top-stage">
-
-            <div class="top-stage-icon">
-                ☸️
-            </div>
-
-            <strong>
-                Kubernetes
-            </strong>
-
-            <small>
-                Deployment
-            </small>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     HERO
-========================= -->
-
-<section class="hero">
-
-
-    <!-- HERO GRAPHIC -->
-
-    <div class="hero-graphic">
-
-
-        <div class="orbit">
-
-            <span class="orbit-dot dot1"></span>
-
-            <span class="orbit-dot dot2"></span>
-
-            <span class="orbit-dot dot3"></span>
-
-        </div>
-
-
-        <div class="orbit"></div>
-
-
-        <div class="cloud-icon">
-
-            <div>
-
-                <svg
-                    class="helm-logo-svg"
-                    viewBox="0 0 64 64"
-                    aria-label="Helm"
-                    role="img"
-                >
-
-                    <circle
-                        cx="32"
-                        cy="32"
-                        r="29"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="3"
-                    />
-
-                    <path
-                        d="M18 44V20h5v19h18v5H18z"
-                        fill="currentColor"
-                    />
-
-                    <path
-                        d="M26 20h5v12h10V20h5v24h-5v-7H31v7h-5V20z"
-                        fill="currentColor"
-                        opacity=".72"
-                    />
-
-                </svg>
-
-                <div style="
-                    font-size:13px;
-                    margin-top:4px;
-                    font-weight:700;
-                ">
-                    HELM
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- HERO CONTENT -->
-
-    <div class="hero-content">
-
-        <h1>
-            Shop Smart. Shop More.
-        </h1>
-
-        <h2>
-            ShopRupee Cloud-Native E-Commerce
-        </h2>
-
-        <p>
-
-            A modern e-commerce application powered by
-            Git, GitHub, Jenkins, Docker, Amazon ECR,
-            Helm and Kubernetes.
-
-        </p>
-
-        <a
-            href="#products"
-            class="button"
-        >
-            🛒 Shop Now
-        </a>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     DEVOPS
-========================= -->
-
-<section
-    class="devops"
-    id="devops"
->
-
-
-    <h2 class="section-title">
-
-        🚀 CI/CD DevOps Pipeline
-
-    </h2>
-
-
-    <p class="section-description">
-
-        From source code to a production-ready
-        Kubernetes deployment using Helm.
-
-    </p>
-
-
-    <!-- MAIN PIPELINE -->
-
-    <div class="pipeline">
-
-
-        <!-- GIT -->
-
-        <div class="pipeline-node">
-
-            <div class="node-icon">
-                💻
-            </div>
-
-            <h3>
-                Git
-            </h3>
-
-            <p>
-                Version Control
-            </p>
-
-        </div>
-
-
-        <div class="pipeline-arrow">
-            →
-        </div>
-
-
-        <!-- GITHUB -->
-
-        <div class="pipeline-node">
-
-            <div class="node-icon">
-                🐙
-            </div>
-
-            <h3>
-                GitHub
-            </h3>
-
-            <p>
-                Source Repository
-            </p>
-
-        </div>
-
-
-        <div class="pipeline-arrow">
-            →
-        </div>
-
-
-        <!-- JENKINS -->
-
-        <div class="pipeline-node">
-
-            <div class="node-icon">
-                🔨
-            </div>
-
-            <h3>
-                Jenkins
-            </h3>
-
-            <p>
-                CI/CD Automation
-            </p>
-
-        </div>
-
-
-        <div class="pipeline-arrow">
-            →
-        </div>
-
-
-        <!-- DOCKER -->
-
-        <div class="pipeline-node">
-
-            <div class="node-icon">
-                🐳
-            </div>
-
-            <h3>
-                Docker
-            </h3>
-
-            <p>
-                Containerization
-            </p>
-
-        </div>
-
-
-        <div class="pipeline-arrow">
-            →
-        </div>
-
-
-        <!-- ECR -->
-
-        <div class="pipeline-node">
-
-            <div class="node-icon">
-                📦
-            </div>
-
-            <h3>
-                Amazon ECR
-            </h3>
-
-            <p>
-                Image Registry
-            </p>
-
-        </div>
-
-
-        <div class="pipeline-arrow">
-            →
-        </div>
-
-
-        <!-- HELM -->
-
-        <div class="pipeline-node helm-card">
-
-            <div class="node-icon">
-
-                <svg
-                    class="helm-logo-svg"
-                    viewBox="0 0 64 64"
-                    aria-label="Helm"
-                    role="img"
-                >
-
-                    <circle
-                        cx="32"
-                        cy="32"
-                        r="29"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="3"
-                    />
-
-                    <path
-                        d="M18 44V20h5v19h18v5H18z"
-                        fill="currentColor"
-                    />
-
-                    <path
-                        d="M26 20h5v12h10V20h5v24h-5v-7H31v7h-5V20z"
-                        fill="currentColor"
-                        opacity=".72"
-                    />
-
-                </svg>
-
-            </div>
-
-            <h3>
-                Helm
-            </h3>
-
-            <p>
-                Package & Release Management
-            </p>
-
-        </div>
-
-
-        <div class="pipeline-arrow">
-            →
-        </div>
-
-
-        <!-- KUBERNETES -->
-
-        <div class="pipeline-node">
-
-            <div class="node-icon">
-                ☸️
-            </div>
-
-            <h3>
-                Kubernetes
-            </h3>
-
-            <p>
-                Container Orchestration
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <!-- =========================
-         METRICS
-    ========================== -->
-
-    <div class="metrics">
-
-
-        <div class="metric">
-
-            <span class="metric-value">
-                7
-            </span>
-
-            <span class="metric-label">
-                Core DevOps Tools
-            </span>
-
-        </div>
-
-
-        <div class="metric">
-
-            <span class="metric-value">
-                4
-            </span>
-
-            <span class="metric-label">
-                Kubernetes Replicas
-            </span>
-
-        </div>
-
-
-        <div class="metric">
-
-            <span class="metric-value">
-                100%
-            </span>
-
-            <span class="metric-label">
-                Containerized
-            </span>
-
-        </div>
-
-
-        <div class="metric">
-
-            <span class="metric-value">
-                ∞
-            </span>
-
-            <span class="metric-label">
-                Repeatable Deployments
-            </span>
-
-        </div>
-
-    </div>
-
-
-    <!-- =========================
-         FLOW GRAPHIC
-    ========================== -->
-
-    <div class="flow-box">
-
-        <div class="flow">
-
-
-            <div class="flow-item">
-                🧑‍💻 Developer
-            </div>
-
-
-            <div class="flow-arrow">
-                →
-            </div>
-
-
-            <div class="flow-item">
-                🐙 GitHub
-            </div>
-
-
-            <div class="flow-arrow">
-                →
-            </div>
-
-
-            <div class="flow-item">
-                🔨 Jenkins
-            </div>
-
-
-            <div class="flow-arrow">
-                →
-            </div>
-
-
-            <div class="flow-item">
-                🐳 Docker
-            </div>
-
-
-            <div class="flow-arrow">
-                →
-            </div>
-
-
-            <div class="flow-item">
-                📦 ECR
-            </div>
-
-
-            <div class="flow-arrow">
-                →
-            </div>
-
-
-            <div class="flow-item helm-flow-item">
-
-
-                <svg
-                    class="helm-logo-small"
-                    viewBox="0 0 64 64"
-                    aria-label="Helm"
-                    role="img"
-                >
-
-                    <circle
-                        cx="32"
-                        cy="32"
-                        r="29"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="3"
-                    />
-
-                    <path
-                        d="M18 44V20h5v19h18v5H18z"
-                        fill="currentColor"
-                    />
-
-                    <path
-                        d="M26 20h5v12h10V20h5v24h-5v-7H31v7h-5V20z"
-                        fill="currentColor"
-                        opacity=".72"
-                    />
-
-                </svg>
-
-                Helm
-
-            </div>
-
-
-            <div class="flow-arrow">
-                →
-            </div>
-
-
-            <div class="flow-item">
-                ☸️ Kubernetes
-            </div>
-
-
-            <div class="flow-arrow">
-                →
-            </div>
-
-
-            <div class="flow-item">
-                🚀 Production
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- =========================
-         KUBERNETES
-    ========================== -->
-
-    <div
-        class="cluster"
-        id="cluster"
-    >
-
-
-        <h2 class="cluster-title">
-
-            ☸️ Kubernetes Cluster
-
-        </h2>
-
-
-        <p class="cluster-subtitle">
-
-            Application deployed using
-            Helm with 4 Kubernetes replicas
-
-        </p>
-
-
-        <div class="cluster-container">
-
-
-            <!-- =========================
-                 HELM RELEASE GRAPHICS
-            ========================== -->
-
-            <div class="helm-release">
-
-
-                <!-- HELM CHART -->
-
-                <div class="helm-release-card">
-
-                    <svg
-                        class="helm-logo-large"
-                        viewBox="0 0 64 64"
-                        aria-label="Helm"
-                        role="img"
-                    >
-
-                        <circle
-                            cx="32"
-                            cy="32"
-                            r="29"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="3"
-                        />
-
-                        <path
-                            d="M18 44V20h5v19h18v5H18z"
-                            fill="currentColor"
-                        />
-
-                        <path
-                            d="M26 20h5v12h10V20h5v24h-5v-7H31v7h-5V20z"
-                            fill="currentColor"
-                            opacity=".72"
-                        />
-
-                    </svg>
-
-                    <strong>
-                        Helm Chart
-                    </strong>
-
-                    <small>
-                        shoprupee-chart
-                    </small>
-
-                </div>
-
-
-                <!-- HELM RELEASE -->
-
-                <div class="helm-release-card">
-
-                    <svg
-                        class="helm-logo-large"
-                        viewBox="0 0 64 64"
-                        aria-label="Helm"
-                        role="img"
-                    >
-
-                        <circle
-                            cx="32"
-                            cy="32"
-                            r="29"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="3"
-                        />
-
-                        <path
-                            d="M18 44V20h5v19h18v5H18z"
-                            fill="currentColor"
-                        />
-
-                        <path
-                            d="M26 20h5v12h10V20h5v24h-5v-7H31v7h-5V20z"
-                            fill="currentColor"
-                            opacity=".72"
-                        />
-
-                    </svg>
-
-                    <strong>
-                        Helm Release
-                    </strong>
-
-                    <small>
-                        shoprupee-prod
-                    </small>
-
-                </div>
-
-
-                <!-- VALUES -->
-
-                <div class="helm-release-card">
-
-                    <svg
-                        class="helm-logo-large"
-                        viewBox="0 0 64 64"
-                        aria-label="Helm"
-                        role="img"
-                    >
-
-                        <circle
-                            cx="32"
-                            cy="32"
-                            r="29"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="3"
-                        />
-
-                        <path
-                            d="M18 44V20h5v19h18v5H18z"
-                            fill="currentColor"
-                        />
-
-                        <path
-                            d="M26 20h5v12h10V20h5v24h-5v-7H31v7h-5V20z"
-                            fill="currentColor"
-                            opacity=".72"
-                        />
-
-                    </svg>
-
-                    <strong>
-                        Helm Values
-                    </strong>
-
-                    <small>
-                        4 replicas • production
-                    </small>
-
-                </div>
-
-            </div>
-
-
-            <!-- =========================
-                 KUBERNETES PODS
-            ========================== -->
-
-            <div class="pods">
-
-
-                <div class="pod">
-
-                    <div class="pod-icon">
-                        📦
-                    </div>
-
-                    <strong>
-                        ShopRupee Pod 1
-                    </strong>
-
-                    <br>
-
-                    <span class="pod-status">
-                        ● RUNNING
-                    </span>
-
-                </div>
-
-
-                <div class="pod">
-
-                    <div class="pod-icon">
-                        📦
-                    </div>
-
-                    <strong>
-                        ShopRupee Pod 2
-                    </strong>
-
-                    <br>
-
-                    <span class="pod-status">
-                        ● RUNNING
-                    </span>
-
-                </div>
-
-
-                <div class="pod">
-
-                    <div class="pod-icon">
-                        📦
-                    </div>
-
-                    <strong>
-                        ShopRupee Pod 3
-                    </strong>
-
-                    <br>
-
-                    <span class="pod-status">
-                        ● RUNNING
-                    </span>
-
-                </div>
-
-
-                <div class="pod">
-
-                    <div class="pod-icon">
-                        📦
-                    </div>
-
-                    <strong>
-                        ShopRupee Pod 4
-                    </strong>
-
-                    <br>
-
-                    <span class="pod-status">
-                        ● RUNNING
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- =========================
-                 ROLLING UPDATE
-            ========================== -->
-
-            <div class="rolling">
-
-
-                <h3>
-                    🔄 Helm + Kubernetes Rolling Update
-                </h3>
-
-
-                <p>
-
-                    Helm manages the application release while
-                    Kubernetes gradually replaces old pods with
-                    the new version.
-
-                </p>
-
-
-                <div class="update-animation">
-
-
-                    <div class="old-pod">
-                        OLD VERSION
-                    </div>
-
-
-                    <div>
-                        →
-                    </div>
-
-
-                    <div class="new-pod">
-                        NEW VERSION
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     PRODUCTS
-========================= -->
-
-
 <!-- =========================
      TOOLS + KUBERNETES CONCEPTS
 ========================== -->
 
 <section class="tools-map" id="tools-map">
-    <h2 class="section-title">🧰 Tools & Kubernetes Deployment Concepts</h2>
+
+    <h2 class="section-title">
+        🧰 Tools & Kubernetes Deployment Concepts
+    </h2>
+
     <p class="section-description">
-        A trainer-friendly view of the technologies used in the ShopRupee DevOps project.
+        Trainer-friendly view of the technologies and Kubernetes
+        scheduling concepts used in the ShopRupee DevOps project.
     </p>
 
+
+    <!-- =========================
+         DEVOPS TOOLS
+    ========================== -->
+
     <div class="tool-lane">
+
         <div class="tool-card">
             <div class="tool-logo git-logo">GIT</div>
             <strong>Git</strong>
             <small>Version Control</small>
         </div>
+
         <div class="tool-arrow">→</div>
 
         <div class="tool-card">
@@ -2635,6 +33,7 @@ footer p {
             <strong>GitHub</strong>
             <small>Source Repository</small>
         </div>
+
         <div class="tool-arrow">→</div>
 
         <div class="tool-card">
@@ -2642,6 +41,7 @@ footer p {
             <strong>Jenkins</strong>
             <small>CI/CD Automation</small>
         </div>
+
         <div class="tool-arrow">→</div>
 
         <div class="tool-card">
@@ -2649,6 +49,7 @@ footer p {
             <strong>Docker</strong>
             <small>Containerization</small>
         </div>
+
         <div class="tool-arrow">→</div>
 
         <div class="tool-card">
@@ -2656,6 +57,7 @@ footer p {
             <strong>Amazon ECR</strong>
             <small>Image Registry</small>
         </div>
+
         <div class="tool-arrow">→</div>
 
         <div class="tool-card featured-tool">
@@ -2663,6 +65,7 @@ footer p {
             <strong>Helm</strong>
             <small>Package & Release</small>
         </div>
+
         <div class="tool-arrow">→</div>
 
         <div class="tool-card featured-tool">
@@ -2670,293 +73,448 @@ footer p {
             <strong>Kubernetes</strong>
             <small>Orchestration</small>
         </div>
+
     </div>
+
+
+    <!-- =========================
+         KUBERNETES CONCEPT CARDS
+    ========================== -->
 
     <div class="concept-grid">
+
+
+        <!-- ROLLING UPDATE -->
+
         <div class="concept-card rolling-card">
-            <div class="concept-icon">🔄</div>
-            <div>
-                <h3>Rolling Update</h3>
-                <p>New pods are introduced gradually while old pods are replaced, reducing downtime during deployment.</p>
+
+            <div class="concept-icon">
+                🔄
             </div>
+
+            <h3>
+                Rolling Update
+            </h3>
+
+            <p>
+                New Pods are introduced gradually while old Pods
+                are replaced, reducing downtime during deployment.
+            </p>
+
             <div class="concept-flow">
-                <span>OLD POD</span><b>→</b><span>NEW POD</span>
+
+                <span>OLD POD</span>
+
+                <b>→</b>
+
+                <span>NEW POD</span>
+
             </div>
+
         </div>
+
+
+        <!-- TAINT -->
 
         <div class="concept-card taint-card">
-            <div class="concept-icon">🚧</div>
-            <div>
-                <h3>Taint</h3>
-                <p>A node can repel pods unless those pods have a matching toleration.</p>
+
+            <div class="concept-icon">
+                🚧
             </div>
+
+            <h3>
+                Taint
+            </h3>
+
+            <p>
+                Worker 1 is protected using a taint so that
+                unrelated Pods are prevented from scheduling there.
+            </p>
+
             <div class="concept-flow">
-                <span>NODE</span><b>⊣</b><span>UNMATCHED POD</span>
+
+                <span>WORKER 1</span>
+
+                <b>⊣</b>
+
+                <span>UNMATCHED POD</span>
+
             </div>
+
         </div>
+
+
+        <!-- TOLERATION -->
 
         <div class="concept-card toleration-card">
-            <div class="concept-icon">🎟️</div>
-            <div>
-                <h3>Toleration</h3>
-                <p>A pod declares that it is allowed to run on a node carrying a matching taint.</p>
+
+            <div class="concept-icon">
+                🎟️
             </div>
+
+            <h3>
+                Toleration
+            </h3>
+
+            <p>
+                ShopRupee declares a matching toleration allowing
+                it to run on the tainted Worker 1.
+            </p>
+
             <div class="concept-flow">
-                <span>TAINT</span><b>↔</b><span>TOLERATION</span>
+
+                <span>TAINT</span>
+
+                <b>↔</b>
+
+                <span>TOLERATION</span>
+
             </div>
+
         </div>
+
+
+        <!-- NODE SELECTOR -->
+
+        <div class="concept-card nodeselector-card">
+
+            <div class="concept-icon">
+                🎯
+            </div>
+
+            <h3>
+                NodeSelector
+            </h3>
+
+            <p>
+                NodeSelector selects the Kubernetes node having
+                the matching label:
+                <strong>dedicated=nginx</strong>.
+            </p>
+
+            <div class="concept-flow">
+
+                <span>dedicated=nginx</span>
+
+                <b>→</b>
+
+                <span>WORKER 1</span>
+
+            </div>
+
+        </div>
+
     </div>
+
+
+    <!-- =========================
+         NODE SCHEDULING ANIMATION
+    ========================== -->
+
+    <div class="scheduling-animation">
+
+        <h3>
+            🎯 ShopRupee Pod Scheduling
+        </h3>
+
+        <p>
+            Taint protects Worker 1 → Toleration allows ShopRupee →
+            NodeSelector selects Worker 1
+        </p>
+
+
+        <div class="schedule-flow">
+
+
+            <!-- WORKER 2 -->
+
+            <div class="worker worker2">
+
+                <div class="worker-icon">
+                    🖥️
+                </div>
+
+                <strong>
+                    Worker 2
+                </strong>
+
+                <small>
+                    No dedicated=nginx label
+                </small>
+
+                <div class="blocked">
+                    ❌ NOT SELECTED
+                </div>
+
+            </div>
+
+
+            <!-- ARROW -->
+
+            <div class="schedule-arrow">
+                →
+            </div>
+
+
+            <!-- SHOPRUPEE POD -->
+
+            <div class="schedule-pod">
+
+                <div class="pod-big">
+                    📦
+                </div>
+
+                <strong>
+                    ShopRupee Pod
+                </strong>
+
+                <code>
+                    nodeSelector:
+                    dedicated=nginx
+                </code>
+
+                <code>
+                    toleration:
+                    dedicated=nginx
+                </code>
+
+            </div>
+
+
+            <!-- ARROW -->
+
+            <div class="schedule-arrow">
+                →
+            </div>
+
+
+            <!-- WORKER 1 -->
+
+            <div class="worker worker1">
+
+                <div class="worker-icon">
+                    🖥️
+                </div>
+
+                <strong>
+                    Worker 1
+                </strong>
+
+                <small>
+                    Label: dedicated=nginx
+                </small>
+
+                <div class="worker-taint">
+                    🚧 Taint:
+                    dedicated=nginx:NoSchedule
+                </div>
+
+                <div class="allowed">
+                    ✅ SHOPRUPEE ALLOWED
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ANIMATED EXPLANATION -->
+
+        <div class="schedule-steps">
+
+            <div class="schedule-step">
+
+                <span class="step-number">
+                    1
+                </span>
+
+                <strong>
+                    Label
+                </strong>
+
+                <small>
+                    Worker 1 has
+                    dedicated=nginx
+                </small>
+
+            </div>
+
+
+            <div class="step-line">
+                →
+            </div>
+
+
+            <div class="schedule-step">
+
+                <span class="step-number">
+                    2
+                </span>
+
+                <strong>
+                    Taint
+                </strong>
+
+                <small>
+                    Worker 1 rejects
+                    unmatched Pods
+                </small>
+
+            </div>
+
+
+            <div class="step-line">
+                →
+            </div>
+
+
+            <div class="schedule-step">
+
+                <span class="step-number">
+                    3
+                </span>
+
+                <strong>
+                    Toleration
+                </strong>
+
+                <small>
+                    ShopRupee is allowed
+                    onto Worker 1
+                </small>
+
+            </div>
+
+
+            <div class="step-line">
+                →
+            </div>
+
+
+            <div class="schedule-step">
+
+                <span class="step-number">
+                    4
+                </span>
+
+                <strong>
+                    NodeSelector
+                </strong>
+
+                <small>
+                    Selects Worker 1
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         TRAINER SUMMARY
+    ========================== -->
 
     <div class="trainer-summary">
-        <h3>🎯 What I Used in This Project</h3>
+
+        <h3>
+            🎯 What I Used in This Project
+        </h3>
+
         <div class="summary-columns">
+
+
             <div>
-                <strong>DevOps Tools</strong>
-                <p>Git • GitHub • Jenkins • Docker • Amazon ECR • Helm • Kubernetes • Rolling Update • Taints • Tolerations</p>
+
+                <strong>
+                    DevOps Tools
+                </strong>
+
+                <p>
+                    Git • GitHub • Jenkins • Docker •
+                    Amazon ECR • Helm • Kubernetes
+                </p>
+
             </div>
+
+
             <div>
-                <strong>Kubernetes Concepts</strong>
-                <p>4 Replicas • Rolling Update • Taints • Tolerations • Pod Scheduling</p>
+
+                <strong>
+                    Kubernetes Concepts
+                </strong>
+
+                <p>
+                    4 Replicas • Rolling Update •
+                    maxUnavailable: 0 • maxSurge: 1
+                </p>
+
             </div>
+
+
             <div>
-                <strong>Deployment Flow</strong>
-                <p>Code → GitHub → Jenkins → Docker → ECR → Helm → Kubernetes → Production</p>
-            </div>
-        </div>
-    </div>
-</section>
 
-<section
-    class="products"
-    id="products"
->
+                <strong>
+                    Scheduling
+                </strong>
 
+                <p>
+                    Worker 1 Label • Taint •
+                    Toleration • NodeSelector
+                </p>
 
-    <h2 class="section-title">
-
-        🛒 Featured Products
-
-    </h2>
-
-
-    <p class="section-description">
-
-        ShopRupee e-commerce application
-
-    </p>
-
-
-    <div class="product-grid">
-
-
-        <!-- PHONE -->
-
-        <div class="card">
-
-            <div class="product-image">
-                📱
             </div>
 
-            <h3>
-                Smart Phone
-            </h3>
 
-            <p>
-                Latest generation smartphone.
-            </p>
+            <div>
 
-            <div class="price">
-                ₹24,999
+                <strong>
+                    Deployment Flow
+                </strong>
+
+                <p>
+                    Code → GitHub → Jenkins → Docker →
+                    ECR → Helm → Kubernetes
+                </p>
+
             </div>
 
-            <a
-                href="#"
-                class="buy"
-            >
-                Buy Now
-            </a>
 
-        </div>
+            <div>
 
+                <strong>
+                    Worker 1
+                </strong>
 
-        <!-- LAPTOP -->
+                <p>
+                    Label:
+                    dedicated=nginx
+                    <br>
+                    Taint:
+                    dedicated=nginx:NoSchedule
+                </p>
 
-        <div class="card">
-
-            <div class="product-image">
-                💻
             </div>
 
-            <h3>
-                Laptop
-            </h3>
 
-            <p>
-                Powerful laptop for work and entertainment.
-            </p>
+            <div>
 
-            <div class="price">
-                ₹54,999
+                <strong>
+                    ShopRupee Pod
+                </strong>
+
+                <p>
+                    NodeSelector:
+                    dedicated=nginx
+                    <br>
+                    Matching Toleration
+                </p>
+
             </div>
-
-            <a
-                href="#"
-                class="buy"
-            >
-                Buy Now
-            </a>
-
-        </div>
-
-
-        <!-- HEADPHONES -->
-
-        <div class="card">
-
-            <div class="product-image">
-                🎧
-            </div>
-
-            <h3>
-                Wireless Headphones
-            </h3>
-
-            <p>
-                High-quality wireless audio experience.
-            </p>
-
-            <div class="price">
-                ₹2,999
-            </div>
-
-            <a
-                href="#"
-                class="buy"
-            >
-                Buy Now
-            </a>
-
-        </div>
-
-
-        <!-- WATCH -->
-
-        <div class="card">
-
-            <div class="product-image">
-                ⌚
-            </div>
-
-            <h3>
-                Smart Watch
-            </h3>
-
-            <p>
-                Track your day with a modern smartwatch.
-            </p>
-
-            <div class="price">
-                ₹4,999
-            </div>
-
-            <a
-                href="#"
-                class="buy"
-            >
-                Buy Now
-            </a>
 
         </div>
 
     </div>
 
 </section>
-
-
-<!-- =========================
-     ARCHITECTURE
-========================= -->
-
-<div class="architecture">
-
-
-    <h2>
-
-        🏗️ Complete Deployment Architecture
-
-    </h2>
-
-
-    <div class="architecture-flow">
-
-        Developer
-        →
-        Git
-        →
-        GitHub
-        →
-        Jenkins
-        →
-        Docker
-        →
-        Amazon ECR
-        →
-        Helm
-        →
-        Kubernetes
-        →
-        4 Replicas
-
-    </div>
-
-
-    <div class="badge">
-
-        ✅ CI/CD
-        &nbsp; | &nbsp;
-        ✅ Docker
-        &nbsp; | &nbsp;
-        ✅ Amazon ECR
-        &nbsp; | &nbsp;
-        ✅ Helm
-        &nbsp; | &nbsp;
-        ✅ Kubernetes
-        &nbsp; | &nbsp;
-        ✅ Rolling Update
-
-    </div>
-
-</div>
-
-
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer>
-
-
-    <p>
-        © 2026 ShopRupee
-    </p>
-
-
-    <p class="footer-tech">
-
-        Git • GitHub • Jenkins • Docker •
-        Amazon ECR • Helm • Kubernetes • Rolling Update • Taints • Tolerations
-
-    </p>
-
-
-    <p>
-
-        🚀 Cloud-Native DevOps Application
-
-    </p>
-
-</footer>
-
-
-</body>
-</html>
