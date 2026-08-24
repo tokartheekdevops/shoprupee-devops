@@ -1010,6 +1010,206 @@ nav a:hover {
 
 }
 
+
+/* =========================
+   TOOLS + CONCEPT GRAPHICS
+========================= */
+
+.tools-map {
+    padding: 70px 7%;
+    background: #f8fafc;
+}
+
+.tool-lane {
+    max-width: 1200px;
+    margin: 35px auto 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.tool-card {
+    width: 135px;
+    min-height: 135px;
+    padding: 18px 10px;
+    background: white;
+    border: 2px solid #cbd5e1;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 7px 20px rgba(15,23,42,.08);
+    transition: .3s;
+}
+
+.tool-card:hover {
+    transform: translateY(-7px);
+    border-color: #2563eb;
+}
+
+.featured-tool {
+    border-color: #2563eb;
+    background: #eff6ff;
+}
+
+.tool-logo {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 10px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 17px;
+    color: white;
+    background: #334155;
+}
+
+.github-logo { background: #111827; }
+.jenkins-logo { background: #d97706; font-size: 32px; }
+.docker-logo { background: #2563eb; font-size: 28px; }
+.ecr-logo { background: #f59e0b; }
+.helm-logo-text { background: #2563eb; font-size: 34px; }
+.k8s-logo { background: #326ce5; font-size: 32px; }
+
+.tool-card strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.tool-card small {
+    color: #64748b;
+    font-size: 11px;
+}
+
+.tool-arrow {
+    color: #2563eb;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.concept-grid {
+    max-width: 1100px;
+    margin: 0 auto 35px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.concept-card {
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    border: 2px solid #cbd5e1;
+    box-shadow: 0 8px 25px rgba(15,23,42,.08);
+    min-height: 245px;
+}
+
+.rolling-card { border-color: #2563eb; }
+.taint-card { border-color: #f59e0b; }
+.toleration-card { border-color: #22c55e; }
+
+.concept-icon {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.concept-card h3 {
+    font-size: 21px;
+    margin-bottom: 8px;
+}
+
+.concept-card p {
+    color: #64748b;
+    line-height: 1.6;
+    font-size: 13px;
+}
+
+.concept-flow {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.concept-flow span {
+    padding: 9px 12px;
+    border-radius: 10px;
+    background: #eef2ff;
+    color: #1e3a8a;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.concept-flow b {
+    font-size: 20px;
+    color: #475569;
+}
+
+.trainer-summary {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px;
+    border-radius: 18px;
+    background: #111827;
+    color: white;
+}
+
+.trainer-summary h3 {
+    text-align: center;
+    margin-bottom: 22px;
+    font-size: 22px;
+}
+
+.summary-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.summary-columns > div {
+    padding: 18px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 13px;
+}
+
+.summary-columns strong {
+    display: block;
+    color: #93c5fd;
+    margin-bottom: 8px;
+}
+
+.summary-columns p {
+    color: #cbd5e1;
+    line-height: 1.6;
+    font-size: 12px;
+}
+
+@media(max-width:900px) {
+    .concept-grid,
+    .summary-columns {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width:768px) {
+    .tool-lane {
+        flex-direction: column;
+    }
+
+    .tool-arrow {
+        transform: rotate(90deg);
+    }
+
+    .tool-card {
+        width: min(100%, 260px);
+    }
+}
+
 /* =========================
    PRODUCTS
 ========================= */
@@ -1317,6 +1517,10 @@ footer p {
 
         <a href="#cluster">
             Kubernetes
+        </a>
+
+        <a href="#tools-map">
+            Tools & Concepts
         </a>
 
     </nav>
@@ -2407,6 +2611,121 @@ footer p {
      PRODUCTS
 ========================= -->
 
+
+<!-- =========================
+     TOOLS + KUBERNETES CONCEPTS
+========================== -->
+
+<section class="tools-map" id="tools-map">
+    <h2 class="section-title">🧰 Tools & Kubernetes Deployment Concepts</h2>
+    <p class="section-description">
+        A trainer-friendly view of the technologies used in the ShopRupee DevOps project.
+    </p>
+
+    <div class="tool-lane">
+        <div class="tool-card">
+            <div class="tool-logo git-logo">GIT</div>
+            <strong>Git</strong>
+            <small>Version Control</small>
+        </div>
+        <div class="tool-arrow">→</div>
+
+        <div class="tool-card">
+            <div class="tool-logo github-logo">GH</div>
+            <strong>GitHub</strong>
+            <small>Source Repository</small>
+        </div>
+        <div class="tool-arrow">→</div>
+
+        <div class="tool-card">
+            <div class="tool-logo jenkins-logo">J</div>
+            <strong>Jenkins</strong>
+            <small>CI/CD Automation</small>
+        </div>
+        <div class="tool-arrow">→</div>
+
+        <div class="tool-card">
+            <div class="tool-logo docker-logo">🐳</div>
+            <strong>Docker</strong>
+            <small>Containerization</small>
+        </div>
+        <div class="tool-arrow">→</div>
+
+        <div class="tool-card">
+            <div class="tool-logo ecr-logo">ECR</div>
+            <strong>Amazon ECR</strong>
+            <small>Image Registry</small>
+        </div>
+        <div class="tool-arrow">→</div>
+
+        <div class="tool-card featured-tool">
+            <div class="tool-logo helm-logo-text">⎈</div>
+            <strong>Helm</strong>
+            <small>Package & Release</small>
+        </div>
+        <div class="tool-arrow">→</div>
+
+        <div class="tool-card featured-tool">
+            <div class="tool-logo k8s-logo">☸</div>
+            <strong>Kubernetes</strong>
+            <small>Orchestration</small>
+        </div>
+    </div>
+
+    <div class="concept-grid">
+        <div class="concept-card rolling-card">
+            <div class="concept-icon">🔄</div>
+            <div>
+                <h3>Rolling Update</h3>
+                <p>New pods are introduced gradually while old pods are replaced, reducing downtime during deployment.</p>
+            </div>
+            <div class="concept-flow">
+                <span>OLD POD</span><b>→</b><span>NEW POD</span>
+            </div>
+        </div>
+
+        <div class="concept-card taint-card">
+            <div class="concept-icon">🚧</div>
+            <div>
+                <h3>Taint</h3>
+                <p>A node can repel pods unless those pods have a matching toleration.</p>
+            </div>
+            <div class="concept-flow">
+                <span>NODE</span><b>⊣</b><span>UNMATCHED POD</span>
+            </div>
+        </div>
+
+        <div class="concept-card toleration-card">
+            <div class="concept-icon">🎟️</div>
+            <div>
+                <h3>Toleration</h3>
+                <p>A pod declares that it is allowed to run on a node carrying a matching taint.</p>
+            </div>
+            <div class="concept-flow">
+                <span>TAINT</span><b>↔</b><span>TOLERATION</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="trainer-summary">
+        <h3>🎯 What I Used in This Project</h3>
+        <div class="summary-columns">
+            <div>
+                <strong>DevOps Tools</strong>
+                <p>Git • GitHub • Jenkins • Docker • Amazon ECR • Helm • Kubernetes • Rolling Update • Taints • Tolerations</p>
+            </div>
+            <div>
+                <strong>Kubernetes Concepts</strong>
+                <p>4 Replicas • Rolling Update • Taints • Tolerations • Pod Scheduling</p>
+            </div>
+            <div>
+                <strong>Deployment Flow</strong>
+                <p>Code → GitHub → Jenkins → Docker → ECR → Helm → Kubernetes → Production</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section
     class="products"
     id="products"
@@ -2625,7 +2944,7 @@ footer p {
     <p class="footer-tech">
 
         Git • GitHub • Jenkins • Docker •
-        Amazon ECR • Helm • Kubernetes
+        Amazon ECR • Helm • Kubernetes • Rolling Update • Taints • Tolerations
 
     </p>
 
